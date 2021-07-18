@@ -2,8 +2,7 @@ package com.burakkocak.practices.java.stream;
 
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author Burak KOCAK
@@ -20,6 +19,22 @@ public class SortMap {
         map.put("B", 4);
         map.put("D", 3);
 
+        List<Map.Entry<String, Integer>> entryList = new ArrayList<>(map.entrySet());
+
+        // 1# Collections sort
+        log.info("Sorting List by Key: ");
+        Collections.sort(entryList, Comparator.comparing(Map.Entry::getKey)); // Lambda -> (o1, o2) -> o1.getKey().compareTo(o2.getKey())
+        for (Map.Entry<String, Integer> entry : entryList) {
+            log.info("{}={}", entry.getKey(), entry.getValue());
+        }
+
+        log.info("Sorting List by Value: ");
+        Collections.sort(entryList, Comparator.comparing(Map.Entry::getValue));
+        for (Map.Entry<String, Integer> entry : entryList) {
+            log.info("{}={}", entry.getKey(), entry.getValue());
+        }
+
+        // 2# Stream sort
         log.info("Sorting Map by Key: ");
         map.entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach(key -> log.info("{}", key));
 
